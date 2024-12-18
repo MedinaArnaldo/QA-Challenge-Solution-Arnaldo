@@ -1,0 +1,20 @@
+[
+  { "testCase": "Validate credentials for a successful login. Correct Username and correct Password.", "username": "testuser", "password": "password" },
+  { "testCase": "Validate credentials with an incorrect Username and a correct Password.", "username": "badtestuser", "password": "password" },
+  { "testCase": "Validate credentials with a correct Username and an incorrect Password.", "username": "testuser", "password": "badpassword" },
+  { "testCase": "Validate credentials with an incorrect Username and an incorrect Password.", "username": "badtestuser", "password": "badpassword" },
+  { "testCase": "Validate credentials with a correct Username and an empty Password.", "username": "testuser", "password": "" },
+  { "testCase": "Validate credentials with an empty Username and a correct Password.", "username": "", "password": "password" },
+  { "testCase": "Validate credentials with an empty Username and an empty Password.", "username": "", "password": "" },
+  { "testCase": "Validate credentials with an empty space in the Username and a correct Password.", "username": "testuser ", "password": "password" },
+  { "testCase": "Validate credentials with a correct Username and an empty space in the Password.", "username": "testuser", "password": "password " },
+  { "testCase": "Validate credentials with an empty space in the Username and an empty space in the Password.", "username": "testuser ", "password": "password " },
+  { "testCase": "Validate credentials with uppercase letters in the Username and a correct Password.", "username": "TESTUSER", "password": "password" },
+  { "testCase": "Validate credentials with a correct Username and with uppercase letters in the Password.", "username": "testuser", "password": "PASSWORD" },
+  { "testCase": "Validate credentials with uppercase letters in the Username and with uppercase letters in the Password.", "username": "TESTUSER", "password": "PASSWORD" },
+  { "testCase": "Validate credentials with an incorrect Username and an empty Password.", "username": "badtestuser", "password": "" },
+  { "testCase": "Validate credentials with an empty Username and an incorrect Password.", "username": "", "password": "badpassword" },
+  { "testCase": "Validate credentials with special character letters in the Username and a correct Password.", "username": "%testuser*", "password": "password" },
+  { "testCase": "Validate credentials with a correct Username and with special character letters in the Password.", "username": "testuser", "password": "%password%" },
+  { "testCase": "Validate credentials with special character letters in the Username and with special character letters in the Password.", "username": "%testuser/", "password": "%password%" }
+]

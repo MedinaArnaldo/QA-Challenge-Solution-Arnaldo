@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "74029f76-a553-4652-94d4-97624b34950c",
+		"name": "Products-Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40444546"
+	},
+	"item": [
+		{
+			"name": "Products POST validations",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const expectedStatusCode = pm.environment.get(\"expectedStatusCode\");\r",
+							"const testCase = pm.environment.get(\"testCase\");\r",
+							"\r",
+							"pm.test(`[${testCase}] - Expected Status Code: ${expectedStatusCode}`, function () {\r",
+							"    pm.response.to.have.status(parseInt(expectedStatusCode));\r",
+							"});\r",
+							"\r",
+							"const responseBody = pm.response.json();\r",
+							"if (pm.response.code === 201) {\r",
+							"    pm.test(`[${testCase}] - Validate response body contains created product`, function () {\r",
+							"        pm.expect(responseBody).to.have.property(\"id\");\r",
+							"        pm.expect(responseBody).to.have.property(\"price\");\r",
+							"        pm.expect(responseBody).to.have.property(\"name\");\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Dataset\r",
+							"const dataSet = [\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Products page using Postman. Verify that a product can be created with valid data.\",\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"product1\",\r",
+							"        \"price\": 10,\r",
+							"        \"expectedStatusCode\": 201 // Expected status code for success\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty id.\",\r",
+							"        \"id\": null,\r",
+							"        \"name\": \"product1\",\r",
+							"        \"price\": 10,\r",
+							"        \"expectedStatusCode\": 400 // CExpected status code for success\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty name.\",\r",
+							"        \"id\": 1,\r",
+							"        \"name\": null,\r",
+							"        \"price\": 10,\r",
+							"        \"expectedStatusCode\": 201 // Expected status code for success\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty price.\",\r",
+							"        \"id\": 1,\r",
+							"        \"name\": \"product1\",\r",
+							"        \"price\": null,\r",
+							"        \"expectedStatusCode\": 400 // Expected status code for success\r",
+							"    }\r",
+							"];\r",
+							"\r",
+							"let currentIndex = pm.environment.get(\"currentIndex\") || 0;\r",
+							"\r",
+							"if (currentIndex < dataSet.length) {\r",
+							"    const currentData = dataSet[currentIndex];\r",
+							"    \r",
+							"    pm.environment.set(\"id\", currentData.id);\r",
+							"    pm.environment.set(\"name\", currentData.name);\r",
+							"    pm.environment.set(\"price\", currentData.price);\r",
+							"    pm.environment.set(\"expectedStatusCode\", currentData.expectedStatusCode);\r",
+							"    pm.environment.set(\"testCase\", currentData.testCase);\r",
+							"    \r",
+							"    pm.environment.set(\"currentIndex\", parseInt(currentIndex) + 1);\r",
+							"} else {\r",
+							"    pm.environment.set(\"currentIndex\", 0);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{id}}\",\r\n  \"name\": \"{{name}}\",\r\n  \"price\": \"{{price}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/Product",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"Product"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

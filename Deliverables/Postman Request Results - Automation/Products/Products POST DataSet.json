@@ -1,0 +1,26 @@
+[
+  {
+    "testCase": "Validate the correct functionality of the Products page using Postman. Verify that a product can be created with valid data.",
+    "id": 1,
+    "name": "product1",
+    "price": 10
+  },
+  {
+    "testCase": "Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty id.",
+    "id": null,
+    "name": "product1",
+    "price": 10
+  },
+  {
+    "testCase": "Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty name.",
+    "id": 1,
+    "name": null,
+    "price": 10
+  },
+  {
+    "testCase": "Validate the correct functionality of the Products page using Postman. Verify that a product can’t be created with empty price.",
+    "id": 1,
+    "name": "product1",
+    "price": null
+  }
+]

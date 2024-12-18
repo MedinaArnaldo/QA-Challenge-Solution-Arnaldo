@@ -1,0 +1,37 @@
+[
+  {
+    "testCase": "Validate the correct functionality of the Orders page using Postman. Verify that the order can be created with valid data.",
+    "id": 1,
+    "productName": "product1",
+    "quantity": 1,
+    "status": "Complete"
+  },
+  {
+    "testCase": "Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty id.",
+    "id": null,
+    "productName": "product1",
+    "quantity": 1,
+    "status": "Complete"
+  },
+  {
+    "testCase": "Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty productName.",
+    "id": 1,
+    "productName": null,
+    "quantity": 1,
+    "status": "Complete"
+  },
+  {
+    "testCase": "Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty quantity.",
+    "id": 1,
+    "productName": "product1",
+    "quantity": null,
+    "status": "Complete"
+  },
+  {
+    "testCase": "Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty status.",
+    "id": 1,
+    "productName": "product1",
+    "quantity": 1,
+    "status": null
+  }
+]

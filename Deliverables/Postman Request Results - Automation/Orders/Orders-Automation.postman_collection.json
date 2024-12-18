@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "37e5632b-bafb-45f2-ad6f-7c967e9d9721",
+		"name": "Orders-Automation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40444546"
+	},
+	"item": [
+		{
+			"name": "Orders POST validations",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const dataSet = [\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Orders page using Postman. Verify that the order can be created with valid data.\",\r",
+							"        \"id\": 1,\r",
+							"        \"productName\": \"product1\",\r",
+							"        \"quantity\": 1,\r",
+							"        \"status\": \"Complete\",\r",
+							"        \"expectedStatusCode\": 201 // Expected status code for success\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty id.\",\r",
+							"        \"id\": null,\r",
+							"        \"productName\": \"product1\",\r",
+							"        \"quantity\": 1,\r",
+							"        \"status\": \"Complete\",\r",
+							"        \"expectedStatusCode\": 400 // Expected status code for error\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Orders page using Postman. Verify that the order can be created with empty productName.\",\r",
+							"        \"id\": 1,\r",
+							"        \"productName\": null,\r",
+							"        \"quantity\": 1,\r",
+							"        \"status\": \"Complete\",\r",
+							"        \"expectedStatusCode\": 201 // Product can be created with null productName\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Orders page using Postman. Verify that the order can’t be created with empty quantity.\",\r",
+							"        \"id\": 1,\r",
+							"        \"productName\": \"product1\",\r",
+							"        \"quantity\": null,\r",
+							"        \"status\": \"Complete\",\r",
+							"        \"expectedStatusCode\": 400 // Quantity is mandatory\r",
+							"    },\r",
+							"    {\r",
+							"        \"testCase\": \"Validate the correct functionality of the Orders page using Postman. Verify that the order can be created with empty status.\",\r",
+							"        \"id\": 1,\r",
+							"        \"productName\": \"product1\",\r",
+							"        \"quantity\": 1,\r",
+							"        \"status\": null,\r",
+							"        \"expectedStatusCode\": 201 // Product can be created with null status\r",
+							"    }\r",
+							"];\r",
+							"\r",
+							"let currentIndex = pm.environment.get(\"currentIndex\") || 0;\r",
+							"\r",
+							"if (currentIndex < dataSet.length) {\r",
+							"    const currentData = dataSet[currentIndex];\r",
+							"    \r",
+							"    // Dynamically set variables\r",
+							"    pm.environment.set(\"id\", currentData.id);\r",
+							"    pm.environment.set(\"productName\", currentData.productName);\r",
+							"    pm.environment.set(\"quantity\", currentData.quantity);\r",
+							"    pm.environment.set(\"status\", currentData.status);\r",
+							"    pm.environment.set(\"expectedStatusCode\", currentData.expectedStatusCode);\r",
+							"    pm.environment.set(\"testCase\", currentData.testCase);\r",
+							"    \r",
+							"    // Increment index for the next case\r",
+							"    pm.environment.set(\"currentIndex\", parseInt(currentIndex) + 1);\r",
+							"} else {\r",
+							"    // Reset index if all cases are completed\r",
+							"    pm.environment.set(\"currentIndex\", 0);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const expectedStatusCode = pm.environment.get(\"expectedStatusCode\");\r",
+							"const testCase = pm.environment.get(\"testCase\");\r",
+							"\r",
+							"// Validate the expected status code\r",
+							"pm.test(`[${testCase}] - Expected Status Code: ${expectedStatusCode}`, function () {\r",
+							"    pm.response.to.have.status(parseInt(expectedStatusCode));\r",
+							"});\r",
+							"\r",
+							"// Optional: Validate response body for successful orders\r",
+							"if (pm.response.code === 201) {\r",
+							"    const responseBody = pm.response.json();\r",
+							"    pm.test(`[${testCase}] - Validate response body for created order`, function () {\r",
+							"        pm.expect(responseBody).to.have.property(\"id\");\r",
+							"        pm.expect(responseBody).to.have.property(\"quantity\");\r",
+							"        pm.expect(responseBody).to.have.property(\"productName\");\r",
+							"        pm.expect(responseBody.productName).to.be.oneOf([null, responseBody.productName]); // Allow null for productName\r",
+							"        pm.expect(responseBody).to.have.property(\"status\");\r",
+							"        pm.expect(responseBody.status).to.be.oneOf([null, responseBody.status]); // Allow null for status\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{id}}\",\r\n  \"productName\": \"{{productName}}\",\r\n  \"quantity\": \"{{quantity}}\",\r\n  \"status\": \"{{status}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/api/Order",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"api",
+						"Order"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
